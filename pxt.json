@@ -1,15 +1,20 @@
 {
-    "name": "pxt-ModulePlus",
-    "description": "",
+    "name": "ModulePlus",
+    "description": "ModulePlus extension",
+    "license": "MIT",
     "dependencies": {
-        "core": "*",
-        "radio": "*",
-        "microphone": "*"
+        "core": "*"
     },
     "files": [
         "main.blocks",
         "main.ts",
-        "README.md"
+        "README.md",
+        "ds18b20.cpp",
+        "dstemp.cpp",
+        "shims.d.ts",
+        "enums.d.ts",
+        "_locales/zh-TW/ModulePlus-strings.json",
+        "_locales/zh-CN/ModulePlus-strings.json"
     ],
     "testFiles": [
         "test.ts"
