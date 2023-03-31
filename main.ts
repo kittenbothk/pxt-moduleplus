@@ -32,6 +32,12 @@ let DS1307_REG_RAM = 8
 let read = pins.createBuffer(14)
 let _touch = DigitalPin.P16
 
+let calibration_value = 21.34 //-0.7
+let phval = 0
+let avgval = 0
+let buffer_arr: int[] = []
+let sort_temp = 0
+
     export enum date_reg {
     //% block=year
     year = 6,
@@ -650,5 +656,33 @@ let _touch = DigitalPin.P16
 			return true
 		else
 			return false
+    }
+
+    //% blockId= ph_Measure block="Measure PH |PIN %pin"
+    //% group="PH" weight=64
+    export function phMeasure (pin:AnalogPin): number {
+        //take 10 samples
+        for (let index=0;index<10;index++){
+            buffer_arr[index] = pins.analogReadPin(pin)
+            basic.pause(30)
+        }
+        // bubble sort
+        for (let i=0;i<9;i++){
+            for (let j=i+1;j<10;j++){
+                if(buffer_arr[i]>buffer_arr[j]){
+                sort_temp=buffer_arr[i]
+                buffer_arr[i]=buffer_arr[j]
+                buffer_arr[j]=sort_temp
+                }
+            }
+        }
+        avgval=0
+        for (let i=2;i<8;i++){
+            avgval+=buffer_arr[i]
+        }
+        let voltage = avgval*5.0/1024/6
+        let ph_act = -5.70 * volt + calibration_value
+
+        return ph_act
     }
 }
