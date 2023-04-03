@@ -37,6 +37,7 @@ let phval = 0
 let avgval = 0
 let buffer_arr: number[] = []
 let sort_temp = 0
+let offset=-0.7
 
     export enum date_reg {
     //% block=year
