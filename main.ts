@@ -664,7 +664,7 @@ let offset=-0.7
      */
     //% blockId= ph_offset block="Set PH Offset Offset: %offset"
     //% group="PH" weight=64
-    export function phOffset (int:offset){
+    export function phOffset (offset:number){
     calibration_value=calibration_value+offset
     }
 
