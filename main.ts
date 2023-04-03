@@ -35,7 +35,7 @@ let _touch = DigitalPin.P16
 let calibration_value = 21.34 //-0.7
 let phval = 0
 let avgval = 0
-let buffer_arr: int[] = []
+let buffer_arr: number[] = []
 let sort_temp = 0
 
     export enum date_reg {
@@ -657,9 +657,18 @@ let sort_temp = 0
 		else
 			return false
     }
+    /**
+     * offset
+     * @param offset offset; eg: -0.7
+     */
+    //% blockId= ph_offset block="Set PH Offset Offset: %offset"
+    //% group="PH" weight=64
+    export function phOffset (int:offset){
+    calibration_value=calibration_value+offset
+    }
 
     //% blockId= ph_Measure block="Measure PH |PIN %pin"
-    //% group="PH" weight=64
+    //% group="PH" weight=63
     export function phMeasure (pin:AnalogPin): number {
         //take 10 samples
         for (let index=0;index<10;index++){
@@ -681,7 +690,7 @@ let sort_temp = 0
             avgval+=buffer_arr[i]
         }
         let voltage = avgval*5.0/1024/6
-        let ph_act = -5.70 * volt + calibration_value
+        let ph_act = -5.70 * voltage + calibration_value
 
         return ph_act
     }
