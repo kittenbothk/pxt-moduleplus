@@ -690,7 +690,7 @@ let offset=-0.7
         for (let i=2;i<8;i++){
             avgval+=buffer_arr[i]
         }
-        let voltage = avgval*5.0/1024/6
+        let voltage = avgval*3.3/1024/6
         let ph_act = -5.70 * voltage + calibration_value
 
         return ph_act
