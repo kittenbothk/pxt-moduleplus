@@ -736,7 +736,7 @@ let point2: number[] = [0, 9.18]
     //% group="PH67"
     export function getPH(pin:AnalogPin):number {
         let voltage = phSampling(pin)
-        ph_act= m*voltage+b
+        let ph_act= m*voltage+b
         return ph_act
     }
 
