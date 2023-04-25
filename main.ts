@@ -711,7 +711,7 @@ let point2: number[] = [0, 9.18]
     }
 
     //% blockId=ph_cali block="Calibrate PH %cali %pin"
-    //% group="PH66"
+    //% group="PH65"
     export function phCalibrate(pin:AnalogPin, cali: phCal){
         if (cali == 4){
             point1[0]=phSampling(pin)
@@ -720,8 +720,20 @@ let point2: number[] = [0, 9.18]
         }
         slope()
     }
+
+    //% blockId=ph_init block="PH Init @6.86? %pin"
+    //% group="PH66"
+    export function PHinit(pin:AnalogPin):boolean {
+        let read = pins.analogReadPin(pin)
+        if (read >= 502 && read <= 522){
+            return true
+        } else {
+            return false
+        }
+    }
+
     //% blockId=ph_get block="Get PH %pin"
-    //% group="PH65"
+    //% group="PH67"
     export function getPH(pin:AnalogPin):number {
         let voltage = phSampling(pin)
         ph_act= m*voltage+b
