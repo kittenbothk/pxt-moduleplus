@@ -35,7 +35,6 @@ let _touch = DigitalPin.P16
 let avgval = 0
 let buffer_arr: number[] = []
 let sort_temp = 0
-let offset=-0.7
 let m=0
 let b=0
 let point1: number[] = [1, 4.00]

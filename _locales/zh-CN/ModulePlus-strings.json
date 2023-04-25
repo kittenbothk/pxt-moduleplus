@@ -30,9 +30,11 @@
   "ModulePlus.fingertouch|block": "感应到手指",
   "ModulePlus.phCalibrate|block": "校正PH感应器 校正液 %cali %pin",
   "ModulePlus.getPH|block": "获取PH %pin",
+  "ModulePlus.PHinit|block": "PH感应器已校正為6.86?",
   "{id:group}Water Temperature Sensor": "水温感应器",
   "{id:group}Turbidity Sensor": "污水浊度感应器",
   "{id:group}Resistor Water Temperature Sensor": "带电阻水温感应器",
   "{id:group}Clock Module": "时钟模组",
-  "{id:group}FingerPrint": "指纹感应器"
+  "{id:group}FingerPrint": "指纹感应器",
+  "{id:group}PH": "PH感应器"
 }
