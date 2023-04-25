@@ -92,9 +92,9 @@ let point2: number[] = [0, 9.18]
 
     export enum phCal {
         //% block=PH4.0
-        PH400=4,
+        PH4=4,
         //% block=PH9.18
-        PH918=9.18
+        PH9=9
     }
 
     //% blockId=ds18init block="Init Water Temp Pin %pin"
@@ -701,7 +701,7 @@ let point2: number[] = [0, 9.18]
 
     //% blockId=ph_cali block="Calibrate PH %cali %pin"
     //% group="PH" weight=66
-    export function phCalibrate(pin:AnalogPin, cali: phCal){
+    export function phCalibrate(cali: phCal, pin:AnalogPin){
         if (cali == 4){
             point1[0]=phSampling(pin)
         } else {
@@ -709,7 +709,9 @@ let point2: number[] = [0, 9.18]
         }
         slope()
     }
-
+    /**
+    * Turn potentiometer until sensor returns true
+    */
     //% blockId=ph_init block="PH Init @6.86? %pin"
     //% group="PH"
     //% advanced=true
