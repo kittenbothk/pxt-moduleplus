@@ -716,7 +716,7 @@ let point2: number[] = [0, 9.18]
     //% advanced=true
     export function PHinit(pin:AnalogPin):boolean {
         let read = pins.analogReadPin(pin)
-        if (read >= 517 && read <= 537){
+        if (read >= 770 && read <= 790){
             return true
         } else {
             return false
