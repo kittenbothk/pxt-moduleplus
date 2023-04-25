@@ -38,6 +38,10 @@ let avgval = 0
 let buffer_arr: number[] = []
 let sort_temp = 0
 let offset=-0.7
+let m=0
+let b=0
+let point1: number[] = [1, 4.00]
+let point2: number[] = [0, 9.18]
 
     export enum date_reg {
     //% block=year
@@ -86,6 +90,13 @@ let offset=-0.7
         on=1,
         //% block=Off
         off=0
+    }
+
+    export enum phCal {
+        //% block=PH 4.0
+        PH4=4,
+        //% block=PH 9.18
+        PH9=9
     }
 
     //% blockId=ds18init block="Init Water Temp Pin %pin"
@@ -665,7 +676,56 @@ let offset=-0.7
     //% blockId= ph_offset block="Set PH Offset Offset: %offset"
     //% group="PH" weight=64
     export function phOffset (offset:number){
-    calibration_value=calibration_value+offset
+        calibration_value=calibration_value+offset
+    }
+
+    function phSampling(pin:AnalogPin):number {
+        //take 10 samples
+        for (let index=0;index<10;index++){
+            buffer_arr[index] = pins.analogReadPin(pin)
+            basic.pause(30)
+        }
+        // bubble sort
+        for (let i=0;i<9;i++){
+            for (let j=i+1;j<10;j++){
+                if(buffer_arr[i]>buffer_arr[j]){
+                sort_temp=buffer_arr[i]
+                buffer_arr[i]=buffer_arr[j]
+                buffer_arr[j]=sort_temp
+                }
+            }
+        }
+        avgval=0
+        for (let i=2;i<8;i++){
+            avgval+=buffer_arr[i]
+        }
+        let voltage = avgval*3.3/1024/6
+        return voltage
+    }
+
+        function slope(){
+        // m = y2-y1/x2-x1
+        m = (point2[1]-point1[1])/(point2[0]-point1[0])
+        // b = -mx+y
+        b = (m*point1[0]*-1)+point1[1]
+    }
+
+    //% blockId=ph_cali block="Calibrate PH %cali %pin"
+    //% group="PH66"
+    export function phCalibrate(pin:AnalogPin, cali: phCal){
+        if (cali == 4){
+            point1[0]=phSampling(pin)
+        } else {
+            point2[0]=phSampling(pin)
+        }
+        slope()
+    }
+    //% blockId=ph_get block="Get PH %pin"
+    //% group="PH65"
+    export function getPH(pin:AnalogPin):number {
+        let voltage = phSampling(pin)
+        ph_act= m*voltage+b
+        return ph_act
     }
 
     //% blockId= ph_Measure block="Measure PH |PIN %pin"
@@ -690,7 +750,7 @@ let offset=-0.7
         for (let i=2;i<8;i++){
             avgval+=buffer_arr[i]
         }
-        let voltage = avgval*3.3/1024/6
+        let voltage = avgval*3.3/1024
         let ph_act = -5.70 * voltage + calibration_value
 
         return ph_act
