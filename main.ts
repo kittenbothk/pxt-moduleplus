@@ -32,8 +32,6 @@ let DS1307_REG_RAM = 8
 let read = pins.createBuffer(14)
 let _touch = DigitalPin.P16
 
-let calibration_value = 21.34 //-0.7
-let phval = 0
 let avgval = 0
 let buffer_arr: number[] = []
 let sort_temp = 0
@@ -93,10 +91,10 @@ let point2: number[] = [0, 9.18]
     }
 
     export enum phCal {
-        //% block=PH 4.0
-        PH4=4,
-        //% block=PH 9.18
-        PH9=9
+        //% block=PH4.0
+        PH400=4,
+        //% block=PH9.18
+        PH918=9.18
     }
 
     //% blockId=ds18init block="Init Water Temp Pin %pin"
@@ -669,15 +667,6 @@ let point2: number[] = [0, 9.18]
 		else
 			return false
     }
-    /**
-     * offset
-     * @param offset offset; eg: -0.7
-     */
-    //% blockId= ph_offset block="Set PH Offset Offset: %offset"
-    //% group="PH" weight=64
-    export function phOffset (offset:number){
-        calibration_value=calibration_value+offset
-    }
 
     function phSampling(pin:AnalogPin):number {
         //take 10 samples
@@ -711,7 +700,7 @@ let point2: number[] = [0, 9.18]
     }
 
     //% blockId=ph_cali block="Calibrate PH %cali %pin"
-    //% group="PH65"
+    //% group="PH" weight=66
     export function phCalibrate(pin:AnalogPin, cali: phCal){
         if (cali == 4){
             point1[0]=phSampling(pin)
@@ -722,10 +711,11 @@ let point2: number[] = [0, 9.18]
     }
 
     //% blockId=ph_init block="PH Init @6.86? %pin"
-    //% group="PH66"
+    //% group="PH"
+    //% advanced=true
     export function PHinit(pin:AnalogPin):boolean {
         let read = pins.analogReadPin(pin)
-        if (read >= 502 && read <= 522){
+        if (read >= 517 && read <= 537){
             return true
         } else {
             return false
@@ -733,38 +723,10 @@ let point2: number[] = [0, 9.18]
     }
 
     //% blockId=ph_get block="Get PH %pin"
-    //% group="PH67"
+    //% group="PH" weight=67
     export function getPH(pin:AnalogPin):number {
         let voltage = phSampling(pin)
         let ph_act= m*voltage+b
-        return ph_act
-    }
-
-    //% blockId= ph_Measure block="Measure PH |PIN %pin"
-    //% group="PH" weight=63
-    export function phMeasure (pin:AnalogPin): number {
-        //take 10 samples
-        for (let index=0;index<10;index++){
-            buffer_arr[index] = pins.analogReadPin(pin)
-            basic.pause(30)
-        }
-        // bubble sort
-        for (let i=0;i<9;i++){
-            for (let j=i+1;j<10;j++){
-                if(buffer_arr[i]>buffer_arr[j]){
-                sort_temp=buffer_arr[i]
-                buffer_arr[i]=buffer_arr[j]
-                buffer_arr[j]=sort_temp
-                }
-            }
-        }
-        avgval=0
-        for (let i=2;i<8;i++){
-            avgval+=buffer_arr[i]
-        }
-        let voltage = avgval*3.3/1024
-        let ph_act = -5.70 * voltage + calibration_value
-
         return ph_act
     }
 }

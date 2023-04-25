@@ -28,6 +28,8 @@
   "ModulePlus.savefinger|block": "保存指紋ID|%value",
   "ModulePlus.deletefinger|block": "删除指紋ID|%value",
   "ModulePlus.fingertouch|block": "感應到手指",
+  "ModulePlus.phCalibrate|block": "校正PH感應器 校正液 %cali %pin",
+  "ModulePlus.getPH|block": "獲取PH %pin",
   "{id:group}Water Temperature Sensor": "水溫感應器",
   "{id:group}Turbidity Sensor": "污水濁度感應器",
   "{id:group}Resistor Water Temperature Sensor": "帶電阻水溫感應器",
