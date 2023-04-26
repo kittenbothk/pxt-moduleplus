@@ -714,12 +714,32 @@ let point2: number[] = [0, 9.18]
     //% blockId=ph_init block="PH Init @6.86? %pin"
     //% group="PH"
     //% advanced=true
-    export function PHinit(pin:AnalogPin):boolean {
+    export function PHinit(pin:AnalogPin) {
         let read = pins.analogReadPin(pin)
         if (read >= 790 && read <= 800){
-            return true
+            basic.showLeds(`
+             . # # # .
+             # . . . #
+             # . . . #
+             # . . . #
+             . # # # .
+            `)
+        } else if (read < 790){
+            basic.showLeds(`
+            . . # . .
+            . # # # .
+            # . # . #
+            . . # . .
+            . . # . .
+            `)
         } else {
-            return false
+        basic.showLeds(`
+            . . # . .
+            . . # . .
+            # . # . #
+            . # # # .
+            . . # . .
+            `)
         }
     }
 

@@ -1,6 +1,6 @@
 {
     "name": "ModulePlus",
-    "version": "v0.0.10",
+    "version": "v0.0.12",
     "description": "ModulePlus extension",
     "license": "MIT",
     "dependencies": {
