@@ -770,9 +770,9 @@ let point2: number[] = [0, 9.18]
     //% group="PH" weight=66
     export function getMB(){
         basic.showString("Value A: ")
-        basic.showString(m)
+        basic.showNumber(m)
         basic.showString("Value B: ")
-        basic.showString(b)
+        basic.showNumber(b)
     }
 
     //% blockID=ph_set block="Set PH Calibrate Values A:%mval ,B:%bval"
