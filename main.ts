@@ -727,7 +727,7 @@ let point2: number[] = [0, 9.18]
     /**
     * Turn potentiometer until sensor returns true
     */
-    //% blockId=ph_init block="PH Init @6.86? %pin"
+    //% blockId=ph_init block="PH Init pH6.86? %pin"
     //% group="PH" weight=67
     export function PHinit(pin:AnalogPin) {
         let read = pins.analogReadPin(pin)
@@ -769,10 +769,10 @@ let point2: number[] = [0, 9.18]
     //% blockID=ph_getmb block="Get PH Calibrate Values"
     //% group="PH" weight=64
     export function getMB(){
-        basic.showString("Value A: ")
-        basic.showNumber(m)
-        basic.showString("Value B: ")
-        basic.showNumber(b)
+        basic.showString("A:")
+        basic.showString("" +(m))
+        basic.showString("B:")
+        basic.showString("" +(b))
     }
 
     //% blockID=ph_set block="Set PH Calibrate Values A:%mval ,B:%bval"
