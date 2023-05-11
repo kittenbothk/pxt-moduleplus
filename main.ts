@@ -729,7 +729,6 @@ let point2: number[] = [0, 9.18]
     */
     //% blockId=ph_init block="PH Init @6.86? %pin"
     //% group="PH"
-    //% advanced=true
     export function PHinit(pin:AnalogPin) {
         let read = pins.analogReadPin(pin)
         if (read >= 790 && read <= 800){
@@ -765,5 +764,21 @@ let point2: number[] = [0, 9.18]
         let voltage = phSampling(pin)
         let ph_act= m*voltage+b
         return ph_act
+    }
+    
+    //% blockID=ph_getmb block="Get PH Calibrate Values"
+    //% group="PH" weight=66
+    export function getMB(){
+        basic.showString("Value A: ")
+        basic.showString(m)
+        basic.showString("Value B: ")
+        basic.showString(b)
+    }
+
+    //% blockID=ph_set block="Set PH Calibrate Values A:%mval ,B:%bval"
+    //%group="PH" weight=65
+    export function setMB(mval:number, bval:number){
+        m=mval
+        b=bval
     }
 }
