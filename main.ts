@@ -784,7 +784,7 @@ let point2: number[] = [0, 9.18]
 
     //% blockId="get_db" block="Get dB %noisepin"
     //%group="Decibel Sensor" weight=62
-    export function ReadNoise(noisepin: AnalogPin): number {
+    export function getDB(noisepin: AnalogPin): number {
         let level = 0
         let voltage = 0
         let noise = 0
