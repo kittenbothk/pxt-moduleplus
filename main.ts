@@ -572,6 +572,7 @@ namespace ModulePlus {
     }
 
     //% blockId= Finger_save block="Save Finger |ID %value"
+    //% value.min=0 value.max=10
     //% group="FingerPrint" weight=66
     export function savefinger(value: number): boolean {
         searchfinger()
@@ -652,6 +653,7 @@ namespace ModulePlus {
     }
 
     //% blockId= Finger_delete block="Delete Finger |ID %value"
+    //% value.min=0 value.max=10
     //% group="FingerPrint" weight=65
     export function deletefinger(value: number): boolean {
         let cmd_deletchar = pins.createBuffer(16)
