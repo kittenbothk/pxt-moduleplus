@@ -33,10 +33,12 @@
   "ModulePlus.PHinit|block": "PH感應器 校正pH6.86 %pin",
   "ModulePlus.getMB|block": "獲取校正數值",
   "ModulePlus.setMB|block": "設定校正數值 A:%mval , B:%bval",
+  "ModulePlus.getDB|block": "聲音感應模組 獲取分貝值 %noisepin",
   "{id:group}Water Temperature Sensor": "水溫感應器",
   "{id:group}Turbidity Sensor": "污水濁度感應器",
   "{id:group}Resistor Water Temperature Sensor": "帶電阻水溫感應器",
   "{id:group}Clock Module": "時鐘模組",
   "{id:group}FingerPrint": "指紋感應器",
-  "{id:group}PH": "pH計"
+  "{id:group}PH": "pH計",
+  "{id:group}Decibel Sensor": "分貝計"
 }
