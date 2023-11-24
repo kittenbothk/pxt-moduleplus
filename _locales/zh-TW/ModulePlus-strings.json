@@ -22,7 +22,7 @@
   "ModulePlus.date_reg.hour|block": "時",
   "ModulePlus.date_reg.minute|block": "分",
   "ModulePlus.date_reg.second|block": "秒",
-  "ModulePlus.initKittenFinger|block": "初始化指紋識別模組 RX %txpin TX %rxpin",
+  "ModulePlus.initKittenFinger|block": "初始化指紋識別模組 TX(黃色) %txpin RX(藍色) %rxpin",
   "ModulePlus.fingersearch|block": "獲取指紋ID",
   "ModulePlus.waitfinger|block": "等待手指鬆開",
   "ModulePlus.savefinger|block": "保存指紋ID|%value",
