@@ -177,7 +177,7 @@ let point2: number[] = [0, 9.18]
     }
 */
 
-/*
+
 
     export enum timeindex{
     //% block="Hour"
@@ -187,22 +187,22 @@ let point2: number[] = [0, 9.18]
     //% block="Second"
     sec=2,
     }
-*/
 
-//   /**
-//      * init serial port
-//     * @param tx Tx pin; eg: SerialPin.P1
-//       * @param rx Rx pin; eg: SerialPin.P2
-//       */
-//      //% blockId=gps_init block="GPS init|Tx(Blue) pin %tx|Rx(Green) pin %rx"
-//      //% group="GPS" weight=100
-//      export function gps_init(tx: SerialPin, rx: SerialPin): void {
-//        serial.redirect(tx, rx, BaudRate.BaudRate9600)
-//        serial.setRxBufferSize(72)
-//        basic.pause(100)
-//     }
 
-/*
+   /**
+      * init serial port
+     * @param tx Tx pin; eg: SerialPin.P1
+       * @param rx Rx pin; eg: SerialPin.P2
+       */
+      //% blockId=gps_init block="GPS init|Tx(Blue) pin %tx|Rx(Green) pin %rx"
+      //% group="GPS" weight=100
+      export function gps_init(tx: SerialPin, rx: SerialPin): void {
+        serial.redirect(tx, rx, BaudRate.BaudRate9600)
+        serial.setRxBufferSize(72)
+        basic.pause(100)
+     }
+
+
 
       //% blockId=gps_read block="GPS Read Data"
       //% group="GPS" weight=95
@@ -228,9 +228,9 @@ let point2: number[] = [0, 9.18]
         longitude=serialBuf[4]
       }
       }
-*/
 
-/*
+
+
       //% blockId=gps_utc block="GPS get UTC Time %i"
       //% group="GPS" weight=85
       export function gps_utc(i:timeindex): number{
@@ -244,9 +244,7 @@ let point2: number[] = [0, 9.18]
       }
       else return 0
       }
-*/
 
-/*
       //% blockID=gps_latitude block="GPS Get Latitude"
       //% group="GPS" weight=80
       export function gps_latitude():number{
@@ -257,11 +255,9 @@ let point2: number[] = [0, 9.18]
       }
       return latfinal
       }
-*/
 
-/*
       //% blockID=gps_longitude block="GPS Get Longitude"
-      //% group="GPS" weight=75
+      //% group="GPS" weight=79
       export function gps_longitude():number{
       let lonfinal = -1
       if (longitude!=''){
@@ -270,7 +266,6 @@ let point2: number[] = [0, 9.18]
       }
       return lonfinal
       }
-*/
 
      /**
      * set ds1307's reg
@@ -374,7 +369,7 @@ let point2: number[] = [0, 9.18]
         setReg(DS1307_REG_SECOND, DecToHex(dat % 60))
     }
 
-/*
+
     function searchfinger() {
 		let cmd_search = pins.createBuffer(12)
 		cmd_search[0] = 239
@@ -681,7 +676,7 @@ let point2: number[] = [0, 9.18]
 		else
 			return false
     }
-*/
+
 
     function phSampling(pin:AnalogPin):number {
         //take 10 samples
