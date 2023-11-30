@@ -915,21 +915,21 @@ namespace ModulePlus {
         basic.pause(100)
     }
 
-    //% blockId= get_pm_item block="Get PM1"
+    //% blockId= get_pm_1 block="Get PM1"
     //% group="Dust Sensor" weight=61
     export function get_pm_1(): number {
         updatePMSensor()
         let pm1 = pm_list[4] * 256 + pm_list[5]
         return pm1
     }
-    //% blockId= get_pm_item block="Get PM2.5"
+    //% blockId= get_pm_25 block="Get PM2.5"
     //% group="Dust Sensor" weight=60
     export function get_pm_25(): number {
         updatePMSensor()
         let pm25 = pm_list[6] * 256 + pm_list[7]
         return pm25
     }
-    //% blockId= get_pm_item block="Get PM10"
+    //% blockId= get_pm_10 block="Get PM10"
     //% group="Dust Sensor" weight=59
     export function get_pm_10(): number {
         updatePMSensor()
