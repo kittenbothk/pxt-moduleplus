@@ -34,11 +34,14 @@
   "ModulePlus.getMB|block": "獲取校正數值",
   "ModulePlus.setMB|block": "設定校正數值 A:%mval , B:%bval",
   "ModulePlus.getDB|block": "聲音感應模組 獲取分貝值 %noisepin",
+  "ModulePlus.init_PMSensor|block":"初始化微粒灰塵感應模組 TX(黃色) %txpin RX(藍色) %rxpin",
+  "ModulePlus.":"",
   "{id:group}Water Temperature Sensor": "水溫感應器",
   "{id:group}Turbidity Sensor": "污水濁度感應器",
   "{id:group}Resistor Water Temperature Sensor": "帶電阻水溫感應器",
   "{id:group}Clock Module": "時鐘模組",
   "{id:group}FingerPrint": "指紋感應器",
   "{id:group}PH": "pH計",
-  "{id:group}Decibel Sensor": "分貝計"
+  "{id:group}Decibel Sensor": "分貝計"，
+  "{id:group}Dust Sensor":"PM2.5 微粒灰塵感應模組"
 }
