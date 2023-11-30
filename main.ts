@@ -39,6 +39,8 @@ namespace ModulePlus {
     let point1: number[] = [1, 4.00]
     let point2: number[] = [0, 9.18]
 
+    let pm_list: Buffer = null
+
     export enum date_reg {
         //% block=year
         year = 6,
@@ -892,5 +894,53 @@ namespace ModulePlus {
         }
         noise = Math.round(noise)
         return Math.round(noise)
+    }
+        /**
+          * init serial port
+         * @param txpin Tx pin; eg: SerialPin.P2
+           * @param rxpin Rx pin; eg: SerialPin.P12
+           */
+    //% blockId= init_PMSensor block="Dust Sensor Init RX(Yellow) %txpin TX(Blue) %rxpin"
+    //% group="Dust Sensor" weight=62
+    export function initPMSensor(txpin: SerialPin, rxpin: SerialPin):void {
+        serial.redirect(txpin, rxpin, BaudRate.BaudRate9600)
+        pm_list = serial.readBuffer(24)
+    }
+
+    function updatePMSensor(){
+        pm_list = serial.readBuffer(20)
+        while (pm_list[0] != 66 && pm_list[1] != 77){
+            pm_list = serial.readBuffer(20)
+        }
+        basic.pause(100)
+    }
+
+    //% blockId= get_pm_item block="Get PM1"
+    //% group="Dust Sensor" weight=61
+    export function get_pm_1(): number {
+        updatePMSensor()
+        let pm1 = pm_list[4] * 256 + pm_list[5]
+        return pm1
+    }
+    //% blockId= get_pm_item block="Get PM2.5"
+    //% group="Dust Sensor" weight=60
+    export function get_pm_25(): number {
+        updatePMSensor()
+        let pm25 = pm_list[6] * 256 + pm_list[7]
+        return pm25
+    }
+    //% blockId= get_pm_item block="Get PM10"
+    //% group="Dust Sensor" weight=59
+    export function get_pm_10(): number {
+        updatePMSensor()
+        let pm10 = pm_list[8] * 256 + pm_list[9]
+        return pm10
+    }
+    //% blockId= get_pm_item block="Get PM Item %index"
+    //% group="Dust Sensor" weight=61
+    //% advanced=true
+    export function get_pm_item(index: number): number {
+        updatePMSensor()
+        return pm_list[index]
     }
 }
