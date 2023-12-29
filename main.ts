@@ -189,12 +189,6 @@ namespace ModulePlus {
         sec = 2,
     }
 
-
-    /**
-       * init serial port
-      * @param tx Tx pin; eg: SerialPin.P1
-        * @param rx Rx pin; eg: SerialPin.P2
-        */
     //% blockId=gps_init block="GPS init|Tx(Blue) pin %tx|Rx(Green) pin %rx"
     //% group="GPS" weight=100
     export function gps_init(tx: SerialPin, rx: SerialPin): void {
@@ -890,11 +884,7 @@ namespace ModulePlus {
         noise = Math.round(noise)
         return Math.round(noise)
     }
-        /**
-          * init serial port
-         * @param txpin Tx pin; eg: SerialPin.P2
-           * @param rxpin Rx pin; eg: SerialPin.P12
-           */
+
     //% blockId= init_PMSensor block="Dust Sensor Init RX(Yellow) %txpin TX(Blue) %rxpin"
     //% group="Dust Sensor" weight=62
     export function initPMSensor(txpin: SerialPin, rxpin: SerialPin):void {
