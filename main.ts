@@ -408,11 +408,6 @@ namespace ModulePlus {
         }
     }
 
-    /**
-       * init serial port
-      * @param txpin Tx pin; eg: SerialPin.P2
-        * @param rxpin Rx pin; eg: SerialPin.P12
-        */
     //% blockId= init_KittenFinger block="Fingerprint Sensor Init RX(Yellow) %txpin RX(Blue) %rxpin"
     //% group="FingerPrint" weight=70
     export function initKittenFinger(txpin: SerialPin, rxpin: SerialPin): void {
