@@ -7,7 +7,7 @@ namespace ModulePlus {
     let deltaU = 0
     let U = 0
     let U25 = 0
-    let K = 0
+    let K = 2735
     let NTU = 0
     let x = 0
 
