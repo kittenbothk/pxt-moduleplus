@@ -1,6 +1,6 @@
 {
     "name": "ModulePlus",
-    "version": "v0.0.24",
+    "version": "v0.0.25",
     "description": "ModulePlus extension",
     "license": "MIT",
     "dependencies": {
@@ -21,7 +21,7 @@
         "test.ts"
     ],
     "targetVersions": {
-        "target": "5.0.12",
+        "target": "7.0.61",
         "targetId": "microbit"
     },
     "supportedTargets": [
