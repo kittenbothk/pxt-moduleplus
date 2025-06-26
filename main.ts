@@ -747,6 +747,7 @@ namespace ModulePlus {
 
     //% blockId=ph_cali block="Calibrate PH %cali %pin"
     //% group="PH" weight=66
+    //% advanced=true
     export function phCalibrate(cali: phCal, pin: AnalogPin) {
         if (cali == 4) {
             point1[0] = phSampling(pin)
@@ -760,6 +761,7 @@ namespace ModulePlus {
     */
     //% blockId=ph_init block="PH Init pH6.86? %pin"
     //% group="PH" weight=67
+    //% advanced=true
     export function PHinit(pin: AnalogPin) {
         let read = pins.analogReadPin(pin)
         if (read >= 790 && read <= 800) {
@@ -791,6 +793,7 @@ namespace ModulePlus {
 
     //% blockId=ph_get block="Get PH %pin"
     //% group="PH" weight=65
+    //% advanced=true
     export function getPH(pin: AnalogPin): number {
         let voltage = phSampling(pin)
         let ph_act = m * voltage + b
@@ -799,6 +802,7 @@ namespace ModulePlus {
 
     //% blockID=ph_getmb block="Get PH Calibrate Values"
     //% group="PH" weight=64
+    //% advanced=true
     export function getMB() {
         basic.showString("A:")
         basic.showString("" + (m))
@@ -808,6 +812,7 @@ namespace ModulePlus {
 
     //% blockID=ph_set block="Set PH Calibrate Values A:%mval ,B:%bval"
     //%group="PH" weight=63
+    //% advanced=true
     export function setMB(mval: number, bval: number) {
         m = mval
         b = bval
@@ -925,8 +930,10 @@ namespace ModulePlus {
         return Math.round(noise)
     }
 
+    /*
     //% blockId= init_PMSensor block="Dust Sensor Init RX(Yellow) %txpin TX(Blue) %rxpin"
     //% group="Dust Sensor" weight=62
+    //% advanced=true
     export function initPMSensor(txpin: SerialPin, rxpin: SerialPin):void {
         serial.redirect(txpin, rxpin, BaudRate.BaudRate9600)
         pm_list = serial.readBuffer(24)
@@ -942,6 +949,7 @@ namespace ModulePlus {
 
     //% blockId= get_pm_1 block="Get PM1"
     //% group="Dust Sensor" weight=61
+    //% advanced=true
     export function get_pm_1(): number {
         updatePMSensor()
         let pm1 = pm_list[4] * 256 + pm_list[5]
@@ -949,6 +957,7 @@ namespace ModulePlus {
     }
     //% blockId= get_pm_25 block="Get PM2.5"
     //% group="Dust Sensor" weight=60
+    //% advanced=true
     export function get_pm_25(): number {
         updatePMSensor()
         let pm25 = pm_list[6] * 256 + pm_list[7]
@@ -956,6 +965,7 @@ namespace ModulePlus {
     }
     //% blockId= get_pm_10 block="Get PM10"
     //% group="Dust Sensor" weight=59
+    //% advanced=true
     export function get_pm_10(): number {
         updatePMSensor()
         let pm10 = pm_list[8] * 256 + pm_list[9]
@@ -968,4 +978,5 @@ namespace ModulePlus {
         updatePMSensor()
         return pm_list[index]
     }
+    */
 }
