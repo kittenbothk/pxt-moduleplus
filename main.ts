@@ -1,9 +1,120 @@
 // ModulePlus@KittenBotHK
 
 //% color="#76dbb1" weight=10 icon="\uf2ce"
-//% groups='["ModulePlus"]'
+//% groups='["ModulePlus", "INA226 Power Monitor", "Water Temperature Sensor", "Resistor Water Temperature Sensor", "Turbidity Sensor", "pH Plus", "GPS", "Clock Module", "FingerPrint", "PH", "Decibel Sensor"]'
 namespace ModulePlus {
 
+    // ==========================================
+    // INA226 Power Monitor 整合區塊開始
+    // ==========================================
+    let INA226_ADDRESS = 0x44; 
+    
+    const INA226_CONF_REG = 0x00;
+    const INA226_BUS_REG = 0x02;
+    const INA226_CURRENT_REG = 0x04;
+    const INA226_CAL_REG = 0x05;
+    const INA226_MAN_ID_REG = 0xFE; 
+    
+    const BUS_VOLTAGE_LSB_V = 0.00125;
+    const CURRENT_LSB_A = 0.0000244140625; 
+
+    function ina226_write16(reg: number, value: number) {
+        let buf = pins.createBuffer(3);
+        buf.setUint8(0, reg);
+        buf.setUint8(1, (value >> 8) & 0xFF);
+        buf.setUint8(2, value & 0xFF);
+        pins.i2cWriteBuffer(INA226_ADDRESS, buf, false);
+    }
+
+    function ina226_read16(reg: number): number {
+        let regBuf = pins.createBuffer(1);
+        regBuf.setUint8(0, reg);
+        pins.i2cWriteBuffer(INA226_ADDRESS, regBuf, true); 
+        let readBuf = pins.i2cReadBuffer(INA226_ADDRESS, 2, false);
+        return (readBuf.getUint8(0) << 8) | readBuf.getUint8(1);
+    }
+
+    function ina226_toSigned16(value: number): number {
+        if ((value & 0x8000) !== 0) {
+            return value - 0x10000;
+        }
+        return value;
+    }
+
+    /**
+     * 自動掃描 INA226 的 I2C 地址
+     */
+    //% blockId="moduleplus_ina226_auto_scan" block="自動尋找 INA226 地址"
+    //% group="INA226 Power Monitor" weight=110
+    export function ina226_autoScan(): number {
+        for (let addr = 0x40; addr <= 0x4F; addr++) {
+            let regBuf = pins.createBuffer(1);
+            regBuf.setUint8(0, INA226_MAN_ID_REG);
+            pins.i2cWriteBuffer(addr, regBuf, true);
+            let readBuf = pins.i2cReadBuffer(addr, 2, false);
+            let manId = (readBuf.getUint8(0) << 8) | readBuf.getUint8(1);
+            
+            if (manId === 0x5449) {
+                INA226_ADDRESS = addr;
+                return addr;
+            }
+        }
+        return 0; 
+    }
+
+    /**
+     * 初始化 INA226 (R100電阻)
+     */
+    //% blockId="moduleplus_ina226_init_r100" block="初始化 INA226 (R100電阻)"
+    //% group="INA226 Power Monitor" weight=100
+    export function ina226_initR100(): void {
+        ina226_autoScan();
+        
+        ina226_write16(INA226_CONF_REG, 0x8000);
+        basic.pause(20);
+        
+        for (let i = 0; i < 3; i++) {
+            ina226_write16(INA226_CAL_REG, 2048);
+            basic.pause(10);
+        }
+        
+        ina226_write16(INA226_CONF_REG, 0x4727); 
+        basic.pause(20);
+    }
+
+    /**
+     * 讀取匯流排電壓 (V)
+     */
+    //% blockId="moduleplus_ina226_get_bus_voltage" block="讀取 匯流排電壓 (V)"
+    //% group="INA226 Power Monitor" weight=90
+    export function ina226_getBusVoltage(): number {
+        let val = ina226_read16(INA226_BUS_REG);
+        return val * BUS_VOLTAGE_LSB_V;
+    }
+
+    /**
+     * 讀取電流 (mA)
+     */
+    //% blockId="moduleplus_ina226_get_current_ma" block="讀取 電流 (mA)"
+    //% group="INA226 Power Monitor" weight=70
+    export function ina226_getCurrentmA(): number {
+        let val = ina226_read16(INA226_CURRENT_REG);
+        val = ina226_toSigned16(val);
+        
+        let current_ma = (val * CURRENT_LSB_A) * 1000.0;
+        
+        if (current_ma < 0) {
+            current_ma = 0;
+        }
+        
+        return Math.round(current_ma * 100) / 100;
+    }
+    // ==========================================
+    // INA226 整合區塊結束
+    // ==========================================
+
+
+    // 原始 ModulePlus 變數[cite: 4]
     const PH_SENSOR_ADDR = 0x54
     const PH_SENSOR_REG = 0x03
     const PH_SENSOR_REG_ADC = 0x04
@@ -173,15 +284,6 @@ namespace ModulePlus {
             return NTU
         }
     }
-
-    /*
-    
-        //% blockID=lens_set block="Sugar Lens Pin %pin ,Set %state"
-        //% group="Sugar Lens FPV" weight=95
-        export function lens_set(pin: DigitalPin, state: lensState){
-            pins.digitalWritePin(pin,state)
-        }
-    */
     
     /**
      * Returns the current pH value from the sensor.
@@ -219,7 +321,6 @@ namespace ModulePlus {
         return result.getNumber(NumberFormat.UInt16BE, 0)
     }
 
-
     export enum timeindex {
         //% block="Hour"
         hour = 0,
@@ -236,8 +337,6 @@ namespace ModulePlus {
         serial.setRxBufferSize(72)
         basic.pause(100)
     }
-
-
 
     //% blockId=gps_read block="GPS Read Data"
     //% group="GPS" weight=95
@@ -263,8 +362,6 @@ namespace ModulePlus {
             longitude = serialBuf[4]
         }
     }
-
-
 
     //% blockId=gps_utc block="GPS get UTC Time %i"
     //% group="GPS" weight=85
@@ -363,13 +460,6 @@ namespace ModulePlus {
 
     /**
      * set Date and Time
-     * @param year is the Year will be set, eg: 2022
-     * @param month is the Month will be set, eg: 10
-     * @param day is the Day will be set, eg: 15
-     * @param weekday is the Weekday will be set, eg: 6
-     * @param hour is the Hour will be set, eg: 16
-     * @param minute is the Minute will be set, eg: 30
-     * @param second is the Second will be set, eg: 0
      */
     //% blockId="DS1307_SET_DATETIME" block="set year %year|month %month|day %day|weekday %weekday|hour %hour|minute %minute|second %second"
     //% group="Clock Module" weight=72
@@ -445,7 +535,6 @@ namespace ModulePlus {
     //% blockId= init_KittenFinger block="Fingerprint Sensor Init RX(Yellow) %txpin RX(Blue) %rxpin"
     //% group="FingerPrint" weight=70
     export function initKittenFinger(txpin: SerialPin, rxpin: SerialPin): void {
-        //touch_pin = touchpin
         serial.redirect(txpin, rxpin, BaudRate.BaudRate57600)
         basic.pause(2000)
         let link = pins.createBuffer(16)
@@ -929,54 +1018,4 @@ namespace ModulePlus {
         noise = Math.round(noise)
         return Math.round(noise)
     }
-
-    /*
-    //% blockId= init_PMSensor block="Dust Sensor Init RX(Yellow) %txpin TX(Blue) %rxpin"
-    //% group="Dust Sensor" weight=62
-    //% advanced=true
-    export function initPMSensor(txpin: SerialPin, rxpin: SerialPin):void {
-        serial.redirect(txpin, rxpin, BaudRate.BaudRate9600)
-        pm_list = serial.readBuffer(24)
-    }
-
-    function updatePMSensor(){
-        pm_list = serial.readBuffer(20)
-        while (pm_list[0] != 66 && pm_list[1] != 77){
-            pm_list = serial.readBuffer(20)
-        }
-        basic.pause(100)
-    }
-
-    //% blockId= get_pm_1 block="Get PM1"
-    //% group="Dust Sensor" weight=61
-    //% advanced=true
-    export function get_pm_1(): number {
-        updatePMSensor()
-        let pm1 = pm_list[4] * 256 + pm_list[5]
-        return pm1
-    }
-    //% blockId= get_pm_25 block="Get PM2.5"
-    //% group="Dust Sensor" weight=60
-    //% advanced=true
-    export function get_pm_25(): number {
-        updatePMSensor()
-        let pm25 = pm_list[6] * 256 + pm_list[7]
-        return pm25
-    }
-    //% blockId= get_pm_10 block="Get PM10"
-    //% group="Dust Sensor" weight=59
-    //% advanced=true
-    export function get_pm_10(): number {
-        updatePMSensor()
-        let pm10 = pm_list[8] * 256 + pm_list[9]
-        return pm10
-    }
-    //% blockId= get_pm_item block="Get PM Item %index"
-    //% group="Dust Sensor" weight=61
-    //% advanced=true
-    export function get_pm_item(index: number): number {
-        updatePMSensor()
-        return pm_list[index]
-    }
-    */
 }
