@@ -44,7 +44,7 @@ namespace ModulePlus {
     /**
      * 自動掃描 INA226 的 I2C 地址
      */
-    //% blockId="moduleplus_ina226_auto_scan" block="自動尋找 INA226 地址"
+    //% blockId="moduleplus_ina226_auto_scan" block="自動尋找閉合電路實驗模組地址"
     //% group="INA226 Power Monitor" weight=110
     export function ina226_autoScan(): number {
         for (let addr = 0x40; addr <= 0x4F; addr++) {
@@ -65,7 +65,7 @@ namespace ModulePlus {
     /**
      * 初始化 INA226 (R100電阻)
      */
-    //% blockId="moduleplus_ina226_init_r100" block="初始化 INA226 (R100電阻)"
+    //% blockId="moduleplus_ina226_init_r100" block="初始化閉合電路實驗模組"
     //% group="INA226 Power Monitor" weight=100
     export function ina226_initR100(): void {
         ina226_autoScan();
