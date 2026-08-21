@@ -45,7 +45,7 @@ namespace ModulePlus {
      * 自動掃描 INA226 的 I2C 地址
      */
     //% blockId="moduleplus_ina226_auto_scan" block="自動尋找閉合電路實驗模組地址"
-    //% group="INA226 Power Monitor" weight=110
+    //% group="閉合電路實驗模組" weight=110
     //% advanced=true
     export function ina226_autoScan(): number {
         for (let addr = 0x40; addr <= 0x4F; addr++) {
@@ -67,7 +67,7 @@ namespace ModulePlus {
      * 初始化 INA226 (R100電阻)
      */
     //% blockId="moduleplus_ina226_init_r100" block="初始化閉合電路實驗模組"
-    //% group="INA226 Power Monitor" weight=100
+    //% group="閉合電路實驗模組" weight=100
     export function ina226_initR100(): void {
         ina226_autoScan();
         
@@ -87,7 +87,7 @@ namespace ModulePlus {
      * 讀取匯流排電壓 (V)
      */
     //% blockId="moduleplus_ina226_get_bus_voltage" block="讀取 匯流排電壓 (V)"
-    //% group="INA226 Power Monitor" weight=90
+    //% group="閉合電路實驗模組" weight=90
     export function ina226_getBusVoltage(): number {
         let val = ina226_read16(INA226_BUS_REG);
         return val * BUS_VOLTAGE_LSB_V;
@@ -97,7 +97,7 @@ namespace ModulePlus {
      * 讀取電流 (mA)
      */
     //% blockId="moduleplus_ina226_get_current_ma" block="讀取 電流 (mA)"
-    //% group="INA226 Power Monitor" weight=70
+    //% group="閉合電路實驗模組" weight=70
     export function ina226_getCurrentmA(): number {
         let val = ina226_read16(INA226_CURRENT_REG);
         val = ina226_toSigned16(val);
