@@ -46,6 +46,7 @@ namespace ModulePlus {
      */
     //% blockId="moduleplus_ina226_auto_scan" block="自動尋找閉合電路實驗模組地址"
     //% group="INA226 Power Monitor" weight=110
+    //% advanced=true
     export function ina226_autoScan(): number {
         for (let addr = 0x40; addr <= 0x4F; addr++) {
             let regBuf = pins.createBuffer(1);
