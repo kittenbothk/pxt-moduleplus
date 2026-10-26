@@ -37,6 +37,7 @@ namespace ModulePlus {
     /**
      * MP3Player class for controlling the MP3 module.
      */
+    //% group="MP3" weight=110
     export class MP3Player {
         private dataPin: DigitalPin;
 
@@ -81,6 +82,7 @@ namespace ModulePlus {
          * Set MP3 volume.
          * @param volume Volume value, range 0-30.
          */
+        //% group="MP3" weight=110
         //% blockId="mp3player_setVolume" block="%player|set MP3 volume to %volume" volume.defl=30 volume.min=0 volume.max=30 weight=80
         public setVolume(volume: number): void {
             const command = this.createCommand(0x04, 0x00, Math.clamp(0, 30, volume));
@@ -246,6 +248,7 @@ namespace ModulePlus {
      * @param pin Data pin.
      * @param volume Initial volume (default is 15).
      */
+    //% group="MP3" weight=110
     //% blockId="mp3player_create" block="Init MP3 on pin %pin with volume %volume" pin.defl=DigitalPin.P1 volume.defl=15 volume.min=0 volume.max=30 weight=100 blockSetVariable=player
     export function create(pin: DigitalPin, volume: number = 15): MP3Player {
         return new MP3Player(pin, volume);
